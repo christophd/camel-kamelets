@@ -42,8 +42,8 @@ concurrency:
 
 env:
   CAMEL_K_VERSION: 1.8.2
-  YAKS_VERSION: 0.9.0-202203140033
-  YAKS_IMAGE_NAME: "docker.io/yaks/yaks"
+  YAKS_VERSION: 0.11.0
+  YAKS_IMAGE_NAME: "docker.io/citrusframework/yaks"
   YAKS_RUN_OPTIONS: "--timeout=15m"
 
 jobs:
@@ -75,7 +75,7 @@ jobs:
         rm -r _kamel
     - name: Get YAKS CLI
       run: |
-        curl --fail -L --silent https://github.com/citrusframework/yaks/releases/download/${YAKS_VERSION}/yaks-${YAKS_VERSION}-linux-64bit.tar.gz -o yaks.tar.gz
+        curl --fail -L --silent https://github.com/citrusframework/yaks/releases/download/v${YAKS_VERSION}/yaks-${YAKS_VERSION}-linux-64bit.tar.gz -o yaks.tar.gz
         mkdir -p _yaks
         tar -zxf yaks.tar.gz --directory ./_yaks
         sudo mv ./_yaks/yaks /usr/local/bin/
@@ -110,6 +110,7 @@ jobs:
       run: |
         echo "Running tests"
         yaks run test/aws-ddb-sink $YAKS_RUN_OPTIONS
+        yaks run test/aws-s3 $YAKS_RUN_OPTIONS
         yaks run test/extract-field-action $YAKS_RUN_OPTIONS
         yaks run test/insert-field-action $YAKS_RUN_OPTIONS
         yaks run test/mail-sink $YAKS_RUN_OPTIONS
