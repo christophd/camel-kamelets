@@ -118,6 +118,9 @@ spec:
     beans:
     - name: dataTypeRegistry
       type: "#class:org.apache.camel.kamelets.utils.format.DefaultDataTypeRegistry"
+      property:
+        - key: classpathScan
+          value: 'false'
     - name: inputTypeProcessor
       type: "#class:org.apache.camel.kamelets.utils.format.DataTypeProcessor"
       property:
